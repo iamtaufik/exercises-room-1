@@ -15,6 +15,7 @@ function index() {
   const result = fs.readFileSync('./database/posts.json', 'utf-8');
   const posts = JSON.parse(result);
   return posts.data; 
+
 }
 
 function show(id) {
@@ -43,6 +44,12 @@ function update(id, { title, body }) {
 
   fs.writeFileSync('./database/posts.json', JSON.stringify({ id: posts.id, data: updatedPost }, null, 4));
 }
-function destroy(id) {}
+function destroy(id) {
+  const result = fs.readFileSync('./database/posts.json', 'utf-8');
+  const posts = JSON.parse(result);
+  const post = posts.data.filter((post) => post.id !== id);
+
+  fs.writeFileSync('./database/posts.json', JSON.stringify({ id: posts.id, data: post }, null, 4));
+}
 
 module.exports = { create, index, show, update, destroy };

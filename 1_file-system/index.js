@@ -13,3 +13,5 @@ console.log(show(1));
 update(2, { title: 'test title update', body: 'test body update' });
 console.log(show(2));
 // test delete post by id
+destroy(5);
+console.log(index());
