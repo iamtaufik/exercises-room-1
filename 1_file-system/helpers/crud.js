@@ -12,8 +12,12 @@ function create(title, body) {
 }
 
 function index() {
-  return posts.data;
+  const result = fs.readFileSync('./database/posts.json', 'utf-8');
+  const posts = JSON.parse(result);
+  return posts.data; 
+
 }
+
 function show(id) {
   const result = fs.readFileSync('./database/posts.json', 'utf-8');
   const posts = JSON.parse(result);
