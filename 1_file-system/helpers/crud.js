@@ -9,7 +9,9 @@ function create(title, body) {
     fs.writeFileSync('./database/posts.json', JSON.stringify(posts, null, 4));
 }
 
-function index() { }
+function index() {
+    return posts.data;
+}
 function show(id) { }
 function update(id, title, body) { }
 function destroy(id) { }
