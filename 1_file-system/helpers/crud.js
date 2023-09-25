@@ -11,7 +11,9 @@ function create(title, body) {
   fs.writeFileSync('./database/posts.json', JSON.stringify(posts, null, 4));
 }
 
-function index() {}
+function index() {
+    return posts.data;
+}
 function show(id) {
   const result = fs.readFileSync('./database/posts.json', 'utf-8');
   const posts = JSON.parse(result);
