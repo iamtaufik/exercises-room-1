@@ -43,6 +43,17 @@ function update(id, { title, body }) {
 
   fs.writeFileSync('./database/posts.json', JSON.stringify({ id: posts.id, data: updatedPost }, null, 4));
 }
-function destroy(id) {}
+function destroy(id) {
+  const result = fs.readFileSync('./database/posts.json', 'utf-8');
+  const posts = JSON.parse(result);
+  const post = posts.data.find((post) => posts.id === id);
+  if (!post) {
+      console.error('cannot found!')
+  } else {
+      posts.data.splice(post);
+      fs.writeFileSync('./database/posts.json', JSON.stringify(posts, null, 4));  
+  }
+}
+
 
 module.exports = { create, index, show, update, destroy };
