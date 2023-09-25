@@ -12,7 +12,7 @@ function create(title, body) {
 }
 
 function index() {
-    return posts.data;
+  return posts.data;
 }
 function show(id) {
   const result = fs.readFileSync('./database/posts.json', 'utf-8');
@@ -43,14 +43,9 @@ function update(id, { title, body }) {
 function destroy(id) {
   const result = fs.readFileSync('./database/posts.json', 'utf-8');
   const posts = JSON.parse(result);
-  const post = posts.data.find((post) => posts.id === id);
-  if (!post) {
-      console.error('cannot found!')
-  } else {
-      posts.data.splice(post);
-      fs.writeFileSync('./database/posts.json', JSON.stringify(posts, null, 4));  
-  }
-}
+  const post = posts.data.filter((post) => post.id !== id);
 
+  fs.writeFileSync('./database/posts.json', JSON.stringify({ id: posts.id, data: post }, null, 4));
+}
 
 module.exports = { create, index, show, update, destroy };
