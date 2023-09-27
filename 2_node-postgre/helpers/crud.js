@@ -50,15 +50,16 @@ function update(id, title, body) {
 
 
 function destroy(id) {
-    return new Promise((resolve, reject) => {
-        let postIndex = posts.data.findIndex(post => post.id === id);
-
-        if (postIndex < 0) return reject(`post with id ${id} is doesn't exist!`);
-
-        posts.data.splice(postIndex, 1);
-
-        fs.writeFileSync('./database/posts.json', JSON.stringify(posts, null, 4));
-        resolve(`post with id ${id} is deleted!`);
+    return new Promise(async (resolve, reject) => {
+        try {
+            // "SELECT * FROM posts where id = $1", [1]
+            // "UPDATE posts SET title = $1, body = $2", ["title", "body"]
+            let result = await pool.query("DELETE from posts where id = $1 RETURNING *;", [1]);
+            if (result.rows.length == 0) return reject (`post with id ${id} not found!`)
+            resolve(`posts with id ${id} is deleted!`);
+        } catch (err) {
+            return reject(err);
+        }
     });
 }
 

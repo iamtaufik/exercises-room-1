@@ -17,10 +17,10 @@ async function main() {
     // test update post by id
     let updatedPost = await update(1, 'title baru dua', 'body baru dua');
     console.log(updatedPost);
-
-    // // test delete post by id
-    // let deletedPost = await destroy(1);
-    // console.log(deletedPost);
+    
+    // test delete post by id
+    let deletedPost = await destroy(1);
+    console.log(deletedPost);
   } catch (err) {
     console.log(err);
   }
