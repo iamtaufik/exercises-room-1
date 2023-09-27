@@ -2,7 +2,7 @@ const { create, index, show, update, destroy } = require("./helpers/crud");
 
 async function main() {
   try {
-    test create post
+    // test create post
     let newPost = await create("test title", "test data");
     console.log(newPost);
 
