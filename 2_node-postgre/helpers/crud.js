@@ -38,15 +38,13 @@ function show(id) {
   }
 
 function update(id, title, body) {
-    return new Promise((resolve, reject) => {
-        let postIndex = posts.data.findIndex(post => post.id === id);
-
-        if (postIndex < 0) return reject(`post with id ${id} is doesn't exist!`);
-        if (title) posts.data[postIndex].title = title;
-        if (body) posts.data[postIndex].body = body;
-
-        fs.writeFileSync('./database/posts.json', JSON.stringify(posts, null, 4));
-        resolve(posts.data[postIndex]);
+    return new Promise(async (resolve, reject) => {
+        try {
+            const result = await pool.query("UPDATE posts SET title = $1, body = $2 WHERE id = $3 RETURNING *;", [title, body, id]);
+            resolve(result.rows[0]);
+        } catch (error) {
+            reject(error);
+        }
     });
 }
 

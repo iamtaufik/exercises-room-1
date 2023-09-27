@@ -14,9 +14,9 @@ async function main() {
     let showPost = await show(3);
     console.log(showPost);
 
-    // // test update post by id
-    // let updatedPost = await update(1, 'title baru dua');
-    // console.log(updatedPost);
+    // test update post by id
+    let updatedPost = await update(1, 'title baru dua', 'body baru dua');
+    console.log(updatedPost);
 
     // // test delete post by id
     // let deletedPost = await destroy(1);
