@@ -17,20 +17,25 @@ function create(title, body) {
 }
 
 function index() {
-    return posts.data;
-}
-
-function show(id) {
-    return new Promise((resolve, reject) => {
-        let post = posts.data.filter(p => {
-            return p.id == id;
-        });
-
-        if (!post.length) return reject(`post with id ${id} is doesn't exist!`);
-
-        resolve(post[0]);
+    return new Promise(async (resolve, reject) => {
+        try {
+            let result = await pool.query("SELECT * FROM posts;");
+            resolve(result.rows);
+        } catch (err) {
+            return reject(err);
+        }
     });
 }
+function show(id) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let result = await pool.query("SELECT * FROM posts WHERE id = $1;", [id]);
+        resolve(result.rows[0]);
+      } catch (err) {
+        return reject(err);
+      }
+    });
+  }
 
 function update(id, title, body) {
     return new Promise(async (resolve, reject) => {
